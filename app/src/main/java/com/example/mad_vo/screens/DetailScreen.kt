@@ -19,6 +19,7 @@ import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import com.example.mad_vo.models.Movie
 import com.example.mad_vo.models.getMovies
+import com.example.mad_vo.widgets.HorizontalScrollImageView
 import com.example.mad_vo.widgets.MovieRow
 
 @Composable
@@ -50,7 +51,14 @@ fun DetailScreen(
 
 @Composable
 fun MainContent(movie: Movie){
-        MovieRow(movie = movie)
+        Surface(modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()) {
+                Column {
+                        MovieRow(movie = movie)
+                        HorizontalScrollImageView(movie = movie)
+                }
+        }
 }
 
 fun filterMovie(movieId: String?) : Movie{

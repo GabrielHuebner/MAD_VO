@@ -5,6 +5,8 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -20,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import com.example.mad_vo.models.Movie
+import com.example.mad_vo.models.getMovies
 
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -33,7 +36,7 @@ fun MovieRow(
     }
     Card(
         modifier = Modifier
-            .clickable { onItemClick(movie.id)}
+            .clickable { onItemClick(movie.id) }
             .padding(4.dp)
             .fillMaxWidth(),
         shape = RoundedCornerShape(corner = CornerSize(16.dp)),
@@ -87,6 +90,22 @@ fun MovieRow(
                         modifier = Modifier.clickable { arrowSwitch = !arrowSwitch }
                     )
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun HorizontalScrollImageView(movie: Movie = getMovies()[0]){
+    LazyRow(){
+        items(movie.images){ image ->
+            Card(
+                modifier = Modifier.padding(12.dp).size(240.dp),
+                elevation = 4.dp
+            ){
+                Image(
+                    painter = rememberImagePainter(data = image),
+                    contentDescription = "movie image")
             }
         }
     }
