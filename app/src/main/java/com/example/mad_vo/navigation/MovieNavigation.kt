@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.mad_vo.screens.DetailScreen
+import com.example.mad_vo.screens.FavoritesScreen
 import com.example.mad_vo.screens.HomeScreen
 
 @Composable
@@ -26,5 +27,6 @@ fun MyNavigation(){
             val movieId = backStackEntry.arguments?.getString("movieId")
             DetailScreen(movieId = movieId, navController = navController)
         }
+        composable(MovieScreens.FavoritesScreen.name){ FavoritesScreen(navController)}
     }
 }

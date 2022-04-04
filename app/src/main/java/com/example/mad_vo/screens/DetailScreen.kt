@@ -31,7 +31,7 @@ fun DetailScreen(
 
         Scaffold(
                 topBar = {
-                        TopAppBar(backgroundColor = Color.Red, elevation = 3.dp){
+                        TopAppBar(backgroundColor = Color.Blue, elevation = 3.dp){
                                 Row{
                                         Icon(imageVector = Icons.Default.ArrowBack,
                                                 contentDescription = "Arrow Back",
