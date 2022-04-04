@@ -1,10 +1,8 @@
 package com.example.mad_vo.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -17,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberImagePainter
+import coil.transform.CircleCropTransformation
 import com.example.mad_vo.models.Movie
 import com.example.mad_vo.models.getMovies
 import com.example.mad_vo.widgets.MovieRow
@@ -45,7 +45,6 @@ fun DetailScreen(
                 }
         ) {
                 MainContent(movie = movie)
-                Text("TTTTTZZZZZ")
         }
 }
 

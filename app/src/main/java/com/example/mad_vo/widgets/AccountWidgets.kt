@@ -2,6 +2,7 @@ package com.example.mad_vo.widgets
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
@@ -16,6 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberImagePainter
+import coil.transform.CircleCropTransformation
 import com.example.mad_vo.models.Movie
 
 
@@ -37,15 +40,24 @@ fun MovieRow(
         elevation = 6.dp
     )
 
+
     {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Surface(
                 modifier = Modifier
                     .size(130.dp)
                     .padding(12.dp),
-                elevation = 6.dp
             ){
-                Icon(imageVector = Icons.Default.AccountBox, contentDescription = "movie picture")
+                Image(
+                    painter = rememberImagePainter(
+                        data = movie.images[0],
+                        builder ={
+                            transformations(CircleCropTransformation())
+                        }
+                    ),
+                    contentDescription = "MovieImg",
+                    modifier = Modifier.fillMaxSize()
+                )
             }
             Column {
                 Text(text = movie.title, style = MaterialTheme.typography.h6)
