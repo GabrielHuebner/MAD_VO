@@ -45,6 +45,7 @@ fun DetailScreen(
                 }
         ) {
                 MainContent(movie = movie)
+                Text("TTTTT")
         }
 }
 
