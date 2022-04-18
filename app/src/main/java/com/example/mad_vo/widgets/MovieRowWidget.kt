@@ -11,9 +11,7 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,14 +21,18 @@ import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import com.example.mad_vo.models.Movie
 import com.example.mad_vo.models.getMovies
+import com.example.mad_vo.ui.theme.Teal200
+import com.example.mad_vo.viewmodels.FavoriteViewModel
 
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MovieRow(
     movie: Movie,
+    showFavoriteIcon : Boolean,
+    content : @Composable () -> Unit = {},
     onItemClick: (String) -> Unit = {}
-    ){
+){
     var arrowSwitch by remember {
         mutableStateOf(false)
     }
@@ -91,6 +93,11 @@ fun MovieRow(
                     )
                 }
             }
+            AnimatedVisibility(
+                visible = showFavoriteIcon
+            ) {
+                content()
+            }
         }
     }
 }
@@ -100,7 +107,9 @@ fun HorizontalScrollImageView(movie: Movie = getMovies()[0]){
     LazyRow(){
         items(movie.images){ image ->
             Card(
-                modifier = Modifier.padding(12.dp).size(240.dp),
+                modifier = Modifier
+                    .padding(12.dp)
+                    .size(240.dp),
                 elevation = 4.dp
             ){
                 Image(
@@ -110,3 +119,20 @@ fun HorizontalScrollImageView(movie: Movie = getMovies()[0]){
         }
     }
 }
+
+@Composable
+fun FavoriteIcon(
+    movie: Movie,
+    isFavorite: Boolean,
+    onFavIconClick: (Movie) -> Unit = {}
+){
+    Icon(
+        imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+        contentDescription = "favorites",
+        modifier = Modifier
+            .padding(end = 25.dp)
+            .clickable {onFavIconClick(movie)},
+        tint = Teal200
+    )
+}
+

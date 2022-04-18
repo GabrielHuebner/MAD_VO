@@ -14,14 +14,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.Navigator
 import com.example.mad_vo.models.Movie
 import com.example.mad_vo.models.getMovies
 import com.example.mad_vo.navigation.MovieScreens
+import com.example.mad_vo.viewmodels.FavoriteViewModel
+import com.example.mad_vo.widgets.FavoriteIcon
 import com.example.mad_vo.widgets.MovieRow
 
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun HomeScreen(navController: NavHostController, viewModel: FavoriteViewModel) {
 
     var showMenu by remember {
         mutableStateOf(false)
@@ -56,18 +57,26 @@ fun HomeScreen(navController: NavHostController) {
             )
         }
     ) {
-        MainContent(movies = getMovies(), navController)
+        MainContent(movies = getMovies(), navController, viewModel)
     }
 }
 
 @Composable
-fun MainContent(movies: List<Movie> = getMovies(), navController: NavHostController){
+fun MainContent(movies: List<Movie> = getMovies(), navController: NavHostController, viewModel: FavoriteViewModel){
     LazyColumn{
-        items(movies) {
-                movie -> MovieRow(movie = movie){ movieId ->
-                            Log.d("MainContent", "My callback value: $movieId")
-                            navController.navigate(MovieScreens.DetailScreen.name + "/$movieId")
-                        }
+        items(movies) { movie ->
+            MovieRow(
+                movie = movie,
+                showFavoriteIcon = true,
+                content = {
+                    FavoriteIcon(
+                        movie = movie,
+                        isFavorite = viewModel.isFavorite(movie)
+                    ) { movie ->
+                        if( ! viewModel.addFavorite(movie)) viewModel.removeFavorite(movie)
+                    }
+                }
+            ) { movieId -> navController.navigate(MovieScreens.DetailScreen.name + "/$movieId") }
         }
     }
 }

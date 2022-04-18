@@ -9,13 +9,16 @@ import androidx.navigation.navArgument
 import com.example.mad_vo.screens.DetailScreen
 import com.example.mad_vo.screens.FavoritesScreen
 import com.example.mad_vo.screens.HomeScreen
+import com.example.mad_vo.viewmodels.FavoriteViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun MyNavigation(){
     val navController = rememberNavController()
+    val favoriteViewModel: FavoriteViewModel = viewModel()
     NavHost(navController = navController, startDestination = MovieScreens.HomeScreen.name){
 
-        composable(MovieScreens.HomeScreen.name){ HomeScreen(navController) }
+        composable(MovieScreens.HomeScreen.name){ HomeScreen(navController, viewModel = favoriteViewModel) }
         composable(
             route = MovieScreens.DetailScreen.name + "/{movieId}",
             arguments = listOf(
@@ -25,8 +28,8 @@ fun MyNavigation(){
             )
         ){  backStackEntry ->
             val movieId = backStackEntry.arguments?.getString("movieId")
-            DetailScreen(movieId = movieId, navController = navController)
+            DetailScreen(movieId = movieId, navController = navController, viewModel = favoriteViewModel)
         }
-        composable(MovieScreens.FavoritesScreen.name){ FavoritesScreen(navController)}
+        composable(MovieScreens.FavoritesScreen.name){ FavoritesScreen(navController, viewModel = favoriteViewModel)}
     }
 }
