@@ -47,7 +47,8 @@ fun MovieRow(
 
 
     {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()) {
             Surface(
                 modifier = Modifier
                     .size(130.dp)
@@ -93,10 +94,15 @@ fun MovieRow(
                     )
                 }
             }
-            AnimatedVisibility(
-                visible = showFavoriteIcon
+            Row(
+                horizontalArrangement = Arrangement.End,
+                modifier = Modifier.fillMaxWidth()
             ) {
-                content()
+                AnimatedVisibility(
+                    visible = showFavoriteIcon
+                ) {
+                    content()
+                }
             }
         }
     }
@@ -130,8 +136,8 @@ fun FavoriteIcon(
         imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
         contentDescription = "favorites",
         modifier = Modifier
-            .padding(end = 25.dp)
-            .clickable {onFavIconClick(movie)},
+            .clickable {onFavIconClick(movie)}
+            .padding(end = 15.dp),
         tint = Teal200
     )
 }
